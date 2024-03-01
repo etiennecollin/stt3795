@@ -1,0 +1,138 @@
+\newcommand{\latexTemplatesPath}{/Users/etiennecollin/github/latex-templates/}
+
+\documentclass[12pt]{article}
+\usepackage[french]{babel}
+\usepackage{\latexTemplatesPath/packages}
+\usepackage[style=ieee,backref=true,backend=biber,date=iso,datezeros=true,seconds=true]{biblatex}
+
+% DOCUMENT USER SETTINGS ==============================================================================================
+\newcommand{\docAuthorName}{Etienne Collin | 20237904,\\Guillaume Genois | 20248507}
+\newcommand{\docAuthorStudentNumber}{2038029}
+\newcommand{\docAuthorTitlePage}{\docAuthorName}
+\newcommand{\docClass}{Fondements Théoriques en Science des Données}
+\newcommand{\docClassInstructor}{Stefan Horoi \& Guillaume Huguet}
+\newcommand{\docClassNumber}{STT3795}
+\newcommand{\docClassSection}{Section A}
+\newcommand{\docClassSemester}{Hiver 2024}
+\newcommand{\docDueDate}{13 Février 2024}
+\newcommand{\docDueTime}{23:59}
+\newcommand{\docSubtitle}{Proposition de Projet Final}
+\newcommand{\docTitle}{Détection de Paraphrases}
+\input{\latexTemplatesPath/templates/basic/page_settings}       % Imports custom page settings
+\input{\latexTemplatesPath/templates/basic/environment}         % Imports custom environments and definitions
+% \fancyhf[HR]{\docClassTime}                                   % Removes student number from right header
+
+% SOURCE ==============================================================================================================
+\begin{document}
+\input{\latexTemplatesPath/templates/basic/title_page_udem}
+
+% \todototoc
+% \listoftodos
+% \pagebreak
+
+% START OF DOCUMENT ===================================================================================================
+% \subfile{subfiles/...}
+
+\section{Objectif}
+L'objectif principal de ce projet est de développer
+un système de classification de texte capable de déterminer si deux
+phrases données sont des paraphrases l'une de l'autre. Nous nous
+concentrerons sur l'utilisation d'un modèle Naive Bayes pour cette
+tâche, en explorant également la possibilité de générer des paraphrases
+si le temps le permet. En outre, nous évaluerons la généralité de notre
+modèle en le testant sur le dataset GLUE.
+
+\section{Ressources}
+\begin{itemize}
+	\item Le corpus \href{https://paperswithcode.com/dataset/mrpc}{MRPC} pour l'entraînement et l'évaluation du modèle.
+	\item Dataset \href{https://paperswithcode.com/dataset/glue}{GLUE} pour tester la généralité du modèle.
+	\item Outils de traitement du langage naturel (NLP) pour le prétraitement des données.
+	\item Bibliothèques de machine learning en Python telles que scikit-learn pour la mise en œuvre du modèle Naive Bayes.
+\end{itemize}
+
+\section{Livraisons Attendues}
+\begin{enumerate}
+	\item Code source du modèle Naive Bayes pour la classification de paraphrases.
+	\item Rapport détaillé sur l'approche utilisée, les résultats obtenus, et les éventuelles expérimentations sur la génération de paraphrases.
+	\item Évaluation des performances du modèle sur le dataset GLUE avec une analyse approfondie des résultats.
+	\item Présentation des conclusions et des pistes d'amélioration pour de futures recherches.
+\end{enumerate}
+
+\pagebreak
+\section{Description}
+Le projet se basera sur le corpus MRPC
+(Microsoft Research Paraphrase Corpus), qui propose une collection de
+paires de phrases annotées pour la détection de paraphrases. L'idée est
+d'implémenter un classificateur Naive Bayes pour évaluer la similarité
+sémantique entre les paires de phrases.
+
+
+\begin{enumerate}
+	\item \textbf{Classification de Paraphrases:}
+	      Utiliser le modèle Naive Bayes pour la classification des paires de phrases en paraphrases
+	      ou non-paraphrases. - Expérimenter avec différentes représentations de
+	      texte telles que bag-of-words, TF-IDF, ou d'autres caractéristiques
+	      pertinentes pour le modèle Naive Bayes.
+	\item \textbf{Évaluation sur le Dataset GLUE (STS-B et QQP):}
+	      \begin{itemize}
+		      \item Tester la généralité du modèle en l'appliquant au dataset GLUE, qui
+		            propose une diversité de tâches de compréhension du langage naturel.
+		      \item Analyser les performances du modèle sur différentes tâches du GLUE
+		            et tirer des conclusions sur sa capacité à généraliser.
+	      \end{itemize}
+	\item \textbf{Approfondissements (si le temps le permet)}
+	      \begin{itemize}
+		      \item Comparaison avec une implémentation SVM
+		      \item Comparaison avec une implémentation random forest
+		      \item Optimisation des performances
+		      \item Génération de Paraphrases
+		            \begin{itemize}
+			            \item Si le temps le permet, explorer des méthodes de génération de
+			                  paraphrases. Cela pourrait impliquer l'utilisation de techniques de
+			                  réécriture automatique ou de modèles de génération de texte pour
+			                  créer des variations sémantiques des phrases.
+		            \end{itemize}
+	      \end{itemize}
+\end{enumerate}
+
+\pagebreak
+\section{Contributions}
+Notre équipe de deux personnes collaborera étroitement tout au long
+du projet en adoptant une approche de "pair-programming" et en
+travaillant conjointement sur les différentes facettes du problème.
+Étant donné que nous sommes confrontés à un domaine relativement
+nouveau pour nous, nous prévoyons explorer collectivement les étapes
+clés du projet.
+
+Bien que nous prévoyions une répartition flexible des tâches, la
+nature collaborative du projet signifie que chaque membre de l'équipe
+participera activement à chaque phase, partageant les idées,
+débattant des approches, et contribuant à la prise de décisions.
+Cela permettra une compréhension approfondie du problème et une
+expertise partagée au sein de l'équipe.
+
+\begin{enumerate}
+	\item \textbf{Exploration du Problème (Collaboratif)}
+	\item \textbf{Prétraitement des Données (Pair-Programming)}
+	\item \textbf{Implémentation du Modèle Naive Bayes (Pair-Programming)}
+	\item \textbf{Évaluation sur le Dataset GLUE (Pair-Programming)}
+	\item \textbf{Aprrofondissements:}
+	      \begin{itemize}
+		      \item Comparaison avec une implémentation SVM (Guillaume)
+		      \item Comparaison avec une implémentation random forest (Guillaume)
+		      \item Optimisation des performances (Etienne)
+		      \item Génération de Paraphrases (Etienne)
+	      \end{itemize}
+	\item \textbf{Rapport (Collaboratif)}
+\end{enumerate}
+% END OF DOCUMENT =====================================================================================================
+% % List of figures/tables
+% \pagebreak
+% \begin{appendix}
+%     \phantomsection\listoffigures
+%     \phantomsection\listoftables
+% \end{appendix}
+
+\pagebreak\phantomsection\printbibliography[heading=bibintoc]
+%\nocite{}
+\end{document}
