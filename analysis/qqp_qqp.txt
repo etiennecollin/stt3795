@@ -1,0 +1,75 @@
+====================
+Using Random classifier method
+| Score: 0.49755132327479595
+| Cross-val score: 0.499 (+/- 0.02)
+| Confusion matrix: TP=7516, TN=12734, FP=12811, FN=7369
+====================
+Using Decision Tree (Gini) method
+| Score: 0.6303240168191937
+| Cross-val score: 0.663 (+/- 0.01)
+| Confusion matrix: TP=7946, TN=17538, FP=8007, FN=6939
+====================
+Using Decision Tree (Entropy) method
+| Score: 0.6303240168191937
+| Cross-val score: 0.663 (+/- 0.01)
+| Confusion matrix: TP=7946, TN=17538, FP=8007, FN=6939
+====================
+Using SVM (RBF kernel) method
+| Score: 0.7305713579025476
+| Cross-val score: 0.732 (+/- 0.00)
+| Confusion matrix: TP=11440, TN=18097, FP=7448, FN=3445
+====================
+Using SVM (linear kernel) method
+| Score: 0.7313875834776157
+| Cross-val score: 0.733 (+/- 0.01)
+| Confusion matrix: TP=11309, TN=18261, FP=7284, FN=3576
+====================
+Using Gaussian Naive Bayes method
+| Score: 0.7035122433836261
+| Cross-val score: 0.722 (+/- 0.01)
+| Confusion matrix: TP=13401, TN=15042, FP=10503, FN=1484
+====================
+Using Random Forest (10 trees, d=None) method
+| Score: 0.6374474400197873
+| Cross-val score: 0.668 (+/- 0.01)
+| Confusion matrix: TP=7656, TN=18116, FP=7429, FN=7229
+====================
+Using Random Forest (100 trees, d=None) method
+| Score: 0.6306455602275538
+| Cross-val score: 0.663 (+/- 0.01)
+| Confusion matrix: TP=8014, TN=17483, FP=8062, FN=6871
+====================
+Using Random Forest (500 trees, d=None) method
+| Score: 0.6306455602275538
+| Cross-val score: 0.663 (+/- 0.01)
+| Confusion matrix: TP=8016, TN=17481, FP=8064, FN=6869
+====================
+Using Random Forest (10 trees, d=20) method
+| Score: 0.6902300272075191
+| Cross-val score: 0.702 (+/- 0.01)
+| Confusion matrix: TP=10145, TN=17761, FP=7784, FN=4740
+====================
+Using Random Forest (100 trees, d=20) method
+| Score: 0.7012119713084344
+| Cross-val score: 0.704 (+/- 0.00)
+| Confusion matrix: TP=10465, TN=17885, FP=7660, FN=4420
+====================
+Using Random Forest (500 trees, d=20) method
+| Score: 0.7016819193668068
+| Cross-val score: 0.706 (+/- 0.01)
+| Confusion matrix: TP=10534, TN=17835, FP=7710, FN=4351
+====================
+Using Random Forest (10 trees, d=100) method
+| Score: 0.636804353203067
+| Cross-val score: 0.666 (+/- 0.01)
+| Confusion matrix: TP=7735, TN=18011, FP=7534, FN=7150
+====================
+Using Random Forest (100 trees, d=100) method
+| Score: 0.6308186989859016
+| Cross-val score: 0.663 (+/- 0.01)
+| Confusion matrix: TP=8019, TN=17485, FP=8060, FN=6866
+====================
+Using Random Forest (500 trees, d=100) method
+| Score: 0.6306702943358892
+| Cross-val score: 0.663 (+/- 0.01)
+| Confusion matrix: TP=8017, TN=17481, FP=8064, FN=6868
