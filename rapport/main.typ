@@ -18,7 +18,7 @@
     instructor: "Enseignants Stefan Horoi & Guillaume Huguet",
   ),
   institution: "Université de Montréal",
-  duedate: "À remettre le 28 Avril 2024 à 23:59",
+  duedate: "À remettre le 29 Avril 2024 à 23:59",
   logo: "logo_udem.png",
   bib: "refs.bib",
   bibstyle: "ieee",
@@ -38,39 +38,40 @@
 
 Les tâches de similarité en traitement du langage naturel (NLP) visent à déterminer le degré de ressemblance sémantique entre différents éléments de langage. Ces éléments peuvent être des mots, des phrases, des paragraphes, ou même des documents entiers.
 
-Ce type de tâches est particulièrement utile pour une variété d'applications telle que la recherche de documents ou sites web selon une requête, la détection de plagiat en identifiant les contenus similaires à d'autres sources, la traduction en différentes langues en identifiant les phrases et les expressions similaires dans les langues source et cible, et les chatbots tels que ChatGPT qui utilisent ce genre de tâches pour comprendre les nuances du langage naturel.
+Ce type de tâche est particulièrement utile pour une variété d'applications telle que la recherche de documents ou de sites web selon une requête, la détection de plagiat en identifiant les contenus similaires à d'autres sources, la traduction en différentes langues en identifiant les phrases et les expressions similaires dans les langues source et cible, et les chatbots tels que ChatGPT qui utilisent ce genre de tâches pour comprendre les nuances du langage naturel.
 
 = Objectifs
 
-Ce projet vise principalement à comparer et évaluer divers systèmes de classification textuelle capables d'identifier si une phrase donnée est une paraphrase d'une autre. De plus, la robustesse des modèles générés sera testée sur le corpus GLUE, en particulier avec les jeux de données QQP et MRPC. Ces deux jeux de données comprennent plusieurs paires de phrases étiquetées comme étant des paraphrases ou non. Des détails supplémentaires sur ces jeux de données seront fournis dans la section suivante. Parmi les objectifs secondaires de ce projet, on trouve la détermination si un entraînement biaisé peut mener à des performances biaisées et l'expérimentation avec divers encodeurs pour identifier le ou les plus performants et généralisables.
+Ce projet évalue et compare divers systèmes de classification textuelle capables d'identifier les paraphrases entre phrases, en testant la robustesse des modèles sur les jeux de données QQP et MRPC du corpus GLUE. Des détails sur ces jeux de données sont fournis dans une section ultérieure. De plus, le projet explore si un entraînement biaisé peut mener à des performances biaisées et expérimente avec divers encodeurs pour identifier les plus performants et généralisables.
 
 = Analyse exploratoire des données
 
 Les données utilisées proviennent du corpus fiable de données GLUE, un benchmark reconnu et maintes fois utilisé en recherche pour évaluer les modèles de langue @wangGLUEMultiTaskBenchmark2019. Plus spécifiquement, ce corpus de données contient des paires de phrases qui sont soit des paraphrases, soit des phrases sans lien sémantique.
 
 == Source des données
-=== QQP
-/ Source des données: Le jeu de données Quora Question Pairs (QQP) est un jeu de données fourni par Quora en 2012 @iyerFirstQuoraDataset. Il contient des paires de questions étiquetées comme étant sémantiquement similaires ou non.
+
+*QQP:*
+/ Source des données: Le jeu de données Quora Question Pairs (QQP) est un jeu de données fourni par Quora en 2017 @iyerFirstQuoraDataset. Il contient des paires de questions étiquetées comme étant sémantiquement similaires ou non.
 / Fiabilité: Le jeu de données a été utilisé des centaines de fois depuis son apparition juste sur paperswithcode.com dans divers articles de recherches scientifiques. Il peut donc être considéré comme fiable.
 / Type de données: Les données utiles à ce projet sont les phrases qui seront des chaînes de caractères (string) et l'étiquette qui indique un booléen si oui (1) ou non (0) une paire de phrases est une paraphrase de l'une et l'autre. 
-/ Quantité: Un fichier `train.tsv`, un fichier `dev.tsv` et un fichier `test.tsv`. Le fichier `train.tsv` contient 363 845 paires de phrases étiquetées, le fichier `dev.tsv` contient 390 962 phrases étiquetées et le fichier `test.tsv` contient 1725 paires de phrases non étiquetées. Les données sont donc déjà séparées pour entraîner le modèle d'apprentissage et d'encodeur avec les données dans le fichier `train.tsv` puis pour évaluer les performances avec le fichier `dev.tsv`. Le fichier `test.tsv` est là pour permettre d'expérimenter sur plus de phrases au besoin.
+/ Quantité: Un fichier `train.tsv`, un fichier `dev.tsv` et un fichier `test.tsv`. Le fichier `train.tsv` contient 363 845 paires de phrases étiquetées, le fichier `dev.tsv` contient 390 962 phrases étiquetées et le fichier `test.tsv` contient 1725 paires de phrases non étiquetées. Les données sont donc déjà séparées pour entraîner le modèle d'apprentissage et l'encodeur avec les données dans le fichier `train.tsv`, puis pour évaluer les performances avec le fichier `dev.tsv`. Le fichier `test.tsv` est là pour permettre d'expérimenter sur plus de phrases au besoin.
 / Attributs: Les deux fichiers `train.tsv` et `test.tsv` sont séparés identiquement en 6 attributs. L'attribut `id` qui donne un identificateur unique à la paire de phrases, les attributs `qid1` et `qid2` donnent un identificateur unique à leur phrase respective, les attributs `question1` et `question2` sont les phrases de langage naturel à évaluer et l'attribut `is_duplicate` indique si la paire de phrases est une paraphrase ou non.
-/ Traitements des données manquantes: Non nécessaire, car il s'agit d'un "benchmark", c'est-à-dire qu'il s'agit d'un jeu de données déjà propre afin d'être facilement utilisé pour comparer les résultats des algorithmes utilisés à ceux d'autres expérimentateurs.
 
-=== MRPC
+*MRPC:*
 / Source des données: Le jeu de données Microsoft Research Paraphrase Corpus (MRPC) est un jeu de données fourni par Microsoft en 2005 @dolanAutomaticallyConstructingCorpus2005. Il contient des paires de phrases provenant d'articles de journaux. Chaque paire est étiquetée comme étant sémantiquement similaire ou non.
 / Fiabilité: Le jeu de données est fourni par Microsoft, qui est une entreprise reconnue dans le domaine de l'apprentissage machine et du traitement de texte naturel, et le jeu de données a été utilisé des centaines de fois depuis son apparition juste sur paperswithcode.com dans divers articles de recherches scientifiques. Il peut donc être considéré comme fiable.
-/ Type de données: Les données qui seront utiles sont les phrases qui seront des chaînes de caractères (string) et l'étiquette qui indique un booléen si oui (1) ou non (0) une paire de phrases est une paraphrase de l'une et l'autre. 
-/ Quantité: Un fichier `train.txt` et un fichier `test.txt`. Le fichier `train.txt` contient 4076 paires de phrases étiquetées et le fichier `test.txt` contient 1725 paires de phrases étiquetées. Les données sont donc déjà séparées pour entraîner le modèle d'apprentissage et d'encodeur avec les données dans le fichier `train.txt` puis pour évaluer les performances avec le fichier `test.txt`.
+/ Type de données: Les données qui seront utiles sont les phrases qui sont des chaînes de caractères (string) et l'étiquette qui indique un booléen si oui (1) ou non (0) une paire de phrases est une paraphrase de l'une et l'autre. 
+/ Quantité: Un fichier `train.txt` et un fichier `test.txt`. Le fichier `train.txt` contient 4076 paires de phrases étiquetées et le fichier `test.txt` contient 1725 paires de phrases étiquetées. Les données sont donc déjà séparées pour entraîner le modèle d'apprentissage et l'encodeur avec les données dans le fichier `train.txt`, puis pour évaluer les performances avec le fichier `test.txt`.
 / Attributs: Les deux fichiers `train.txt` et `test.txt` sont séparés identiquement en 5 attributs. L'attribut `Quality` qui indique si la paire de phrases est une paraphrase ou non, les attributs `#1 ID` et `#2 ID` donnent un identificateur unique à leur phrase respective, les attributs `#1 String` et `#2 String` sont les phrases de langage naturel à évaluer.
-/ Traitements des données manquantes: Non nécessaire, car il s'agit d'un "benchmark", c'est-à-dire qu'il s'agit d'un jeu de données déjà propres afin d'être facilement utilisé pour comparer les résultats des algorithmes utilisés à ceux d'autres expérimentateurs.
+
+Dans les deux corpus de données, le traitement des données manquantes n'est pas nécessaire. Effectivement, étant des "benchmarks", ces jeux de données sont déjà propres afin d'être facilement utilisé pour comparer les résultats des algorithmes utilisés à ceux d'autres expérimentateurs.
 
 En pratique, puisque le jeu de données QQP contient plus de données, il est plus intéressant de l'utiliser pour entraîner les modèles d'apprentissage automatique. Cependant, après plusieurs tentatives, des contraintes matérielles forcent l'utilisation d'un sous-ensemble du corpus total pour l'entraînement. Les algorithmes utilisés rencontrent également différents problèmes et arrêtent tout simplement de fonctionner par manque de mémoire. Ainsi, la décision a été prise d'entraîner les modèles sur le MRPC et de les tester sur le MRPC et sur le QQP. Le tester sur QQP apparaît tout de même intéressant, car la distribution de ses paires de phrases est différente. De plus, il devrait être tout de même pertinent d'entraîner les modèles sur un sous-ensemble de QQP, soit les 62 500 premières paires seulement, car MRPC contient beaucoup moins d'exemples d'entraînement. Ainsi, il sera possible d'observer si un modèle entraîné sur plus de données donne bel et bien de meilleurs résultats.
 
 == Statistiques descriptives
 Afin de donner un meilleur aperçu des jeux de données, différentes statistiques descriptives de chacun des jeux de données peuvent être très utiles @esExploratoryDataAnalysis2022. Cela permettra de comparer les similitudes et différences dans un même jeu de données entre sa partie train et sa partie test, et entre les jeux de données.
 / Proportion de phrases sémantiquement similaires: L'équilibre des paraphrases dans les jeux de données est important à analyser. Un déséquilibre, avec une prévalence excessive de paraphrases, peut favoriser la performance du modèle dans l'identification de ces dernières, mais entraver sa capacité à distinguer les non-paraphrases. Ceci peut induire un biais dans l'entraînement du modèle.
-/ Fréquence de la longueur des phrases: L'analyse de la longueur des phrases dans les jeux de données révèle leur distribution. Des disparités peuvent indiquer une influence sur la performance du modèle, car des phrases de longueur similaire sont généralement plus sémantiquement similaires. La comparaison entre les jeux de données est pertinente pour évaluer cette influence. De plus, l'encodeur transformant les phrases en vecteurs de dimension fixe pourrait être moins efficace pour les phrases de longueurs extrêmes. Ainsi, nous comparerons la distribution de cette fréquence sur les phrases similaires, non similaires et dans l'ensemble des données.
+/ Fréquence de la longueur des phrases: L'analyse de la longueur des phrases dans les jeux de données révèle leur distribution. Des disparités peuvent indiquer une influence sur la performance du modèle, car des phrases de longueur similaire sont généralement plus sémantiquement similaires. La comparaison entre les jeux de données est pertinente pour évaluer cette influence. De plus, l'encodeur transformant les phrases en vecteurs de dimension fixe pourrait être moins efficace pour les phrases de longueurs extrêmes. Ainsi, la distribution de cette fréquence sur les phrases similaires, non similaires et dans l'ensemble des données sera comparée.
 / Fréquence de la longueur des mots: De façon analogue à la fréquence de la longueur des phrases, il est pertinent d'analyser la fréquence de la longueur des mots, car une grande disparité à l'intérieur du jeu de données d'entraînement va potentiellement venir rendre le choix de l'hyperparamètre de la taille des vecteurs générés par l'encodeur moins efficace. Aussi, une paire de phrases avec une distribution similaire de la longueur de leurs mots sera intuitivement plus probable à être sémantiquement similaire. Il est donc aussi intéressant de comparer la distribution de cette fréquence sur les phrases similaires, les phrases non similaires et globalement.
 / Fréquence de la longueur moyenne des mots par phrase: De façon analogue à la fréquence de la longueur des phrases, les phrases ayant une structure syntaxique et un sens similaire tendent intuitivement à utiliser des mots d'une longueur moyenne comparable. Il apparaît intéressant de comparer alors la distribution de cette fréquence sur les phrases similaires, les phrases non similaires et globalement.
 / Fréquence des mots vides (_stop words_): L'analyse des mots vides est essentielle, car ils n'apportent pas de sens à la phrase. Filtrer ces mots lors du prétraitement des données est crucial pour éviter d'influencer la capacité des modèles à identifier des paraphrases. Si deux phrases non similaires partagent de nombreux mots vides, le modèle pourrait incorrectement les classifier comme des paraphrases en raison de cette similarité superficielle. En réalité, ces mots vides ne contribuent pas à la signification des phrases, ce qui fausserait la classification.
@@ -146,6 +147,9 @@ Afin de donner un meilleur aperçu des jeux de données, différentes statistiqu
     image("./images/analyse-exploratoire/mrpc/frequencetypesmots_test.png"),
   )
 )
+
+=== Analyse
+
 À partir des analyses exploratoires, on observe une similarité dans la distribution des phrases des ensembles d'entraînement et de test des jeux de données QQP et MRPC du corpus
 GLUE.
 
@@ -204,9 +208,9 @@ Sommairement, les métriques de distance qui suivent sont utilisées afin de mes
 ]
 #definition[
   Et l'équation de la distance euclidienne:
-  $ l_2 = sqrt(sum_i (x_i-y_i)^2) = sqrt(||x||^2 + ||y||^2 - 2||x||||y||(<x,y>) ) $
+  $ l_2 = sqrt(sum_i (x_i-y_i)^2) = sqrt(||x||^2_2 + ||y||^2_2 - 2( angle.l x,y angle.r) ) $
 ]
-On remarque que ces deux distances dépendent de $<x,y>$ et sont donc proportionnelles.
+Avec des vecteurs normalisés, on remarque que ces deux distances dépendent uniquement de $angle.l x,y angle.r$ et sont donc proportionnelles.
 
 #definition[
   Définissons maintenant la distance mahalanobis:
@@ -239,31 +243,31 @@ Un bon modèle pour ce projet voudrait maximiser toutes ces métriques.
 
 == Modèles d'apprentissage
 #note[Cette section est majoritairement tirée de @collinTP2ApprentissageMachine2024.]
-Ce projet n'utilise que des données étiquetées, ceci amène donc à l'utilisation de méthodes supervisées.
+Ce projet se concentre sur l'utilisation de méthodes supervisées avec des données étiquetées. Pour atteindre des performances similaires, les techniques non supervisées nécessiteraient une plus grande quantité de données et des ressources informatiques plus importantes afin d'accomoder ces données supplémentaires.
 
 === Naïve Bayes
 Le modèle Naïve Bayes est un algorithme d'apprentissage automatique probabiliste basé sur l'application du théorème de Bayes avec une hypothèse d'indépendance forte (et naïve) entre les données. Il estime les probabilités conditionnelles pour chaque classe et calcule ensuite la probabilité a posteriori pour les données d'entrée nouvelles, l'affectant à la classe la plus probable. 
 
-Étant robuste au bruit, ce modèle semble particulièrement intéressant à la tâche d'identification de paraphrases, car identifier si deux phrases sont sémantiquement similaires revient à trouver la sémantique de chacune et ignorer le bruit autour.
+Ce modèle résistant au bruit semble particulièrement adapté à l'identification des paraphrases, car déterminer si deux phrases ont une signification similaire implique de trouver leur sens sémantique tout en ignorant les distractions.
 
 === Arbre de décision
 Le modèle d'arbre de décision est un algorithme d'apprentissage automatique qui utilise une structure en arbre pour faire des prédictions ou classer des données en fonction de variables d'entrée. Il fonctionne en divisant les données en sous-ensembles plus petits à l'aide d'une série de décisions ou de branches, chacune représentant un test sur une ou plusieurs variables d'entrée. Ce processus se poursuit jusqu'à ce qu'un point d'arrêt optimal soit atteint et ensuite la décision finale est prise en fonction des valeurs attribuées aux feuilles.
 
 Pour décider de l'optimalité d'une scission, on utilise généralement l'indice de Gini ou l'entropie. L'indice de Gini mesure la diversité des échantillons dans un noeud, et plus cet indice est faible, mieux c'est. L'entropie quantifie le degré d'imprévisibilité d'un ensemble de données, et un ensemble avec une entropie faible est considéré comme étant très prévisible. Ainsi, lorsque nous divisons les données en deux groupes distincts, nous cherchons à minimiser l'indice de Gini ou l'entropie pour chaque groupe, ce qui nous aide à choisir la scission optimale.
 
-Ce modèle semble particulièrement intéressant pour la problématique, car un arbre de décision est robuste au bruit et sélectionne efficacement les caractéristiques qui apportent le plus d'informations. Ainsi, il semble bien disposé à identifier la sémantique d'une phrase.
+Ce modèle est adapté pour cette tâche, car il est robuste au bruit et permet d'efficacement sélectionner les caractéristiques apportant le plus d'informations. Ainsi, il est bien positionné pour identifier la sémantique d'une phrase.
 
 === Forêt aléatoire
 Le modèle de forêt aléatoire représente un ensemble d'arbres de décision appris individuellement à partir des exemples d'entraînement. Ces arbres sont utilisés pour prédire la classe ou la valeur cible d'un exemple de test en procédant le vote majoritaire des prédictions de chaque arbre dans l'ensemble. L'avantage de ce modèle est qu'il résiste bien aux données bruyantes et au surapprentissage, puisque les différents arbres sont moins corrélés entre eux.
 
-Ce modèle est aussi intéressant, car il résiste au bruit et au surapprentissage. Ainsi, il sera sûrement presque autant efficace sur un jeu de données avec lequel il s'est entraîné que sur un autre.
+Ce modèle est aussi intéressant, car il résiste au bruit et au surapprentissage. Ainsi, il devrait être presque aussi efficace sur un jeu de données avec lequel il s'est entraîné que sur un autre.
 
 === SVM
 Les modèles SVM (Support Vector Machine) sont des algorithmes d'apprentissage machine qui fonctionnent en cherchant un hyperplan optimal pour séparer les différentes classes de données. Le but est d'optimiser la marge entre ces deux groupes, ce qui permet un modèle plus robuste aux données aberrantes et une meilleure généralisation sur des données inconnues.
 
 Les noyaux (kernels) sont utilisés dans les SVM pour transformer des données non linéairement séparables en un espace de dimension supérieure où elles peuvent être séparées par un hyperplan linéaire. Généralement, on utilise le noyau polynomial (polynomial) et le noyau RBF (Radial Basis Function). Le noyau linéaire est moins flexible que le noyau RBF, mais il est plus rapide à entraîner et nécessite généralement moins de données. Le noyau RBF est plus complexe et offre une meilleure performance sur des ensembles de données complexes, mais son temps d'entraînement est généralement plus long et nécessite plus de données.
 
-Ce modèle est intéressant, car il est flexible selon les relations des données qui seront linéaires ou non linéaires tout en étant résistant au bruit.
+Les SVMs offrent une flexibilité dans la gestion des relations de données, qu'elles soient linéaires ou non-linéaires, tout en étant résistants au bruit.
 
 = Résultats & Comparaison des modèles
 
@@ -330,7 +334,7 @@ En général, les données encodées avec Universal Sentence Encoder et entraîn
   )
 )<fig-metrics-moyenne>
 
-Les résultats complets avec les métriques d'évaluation sont en annexes @subsect-stats, le pointillé orange représente le classificateur aléatoire. Le rappel est la métrique la plu élevée, ce qui signifie que les modèles sont particulièrement efficaces pour identifier toutes les paires de phrases qui sont des paraphrases parmi toutes les paraphrases du jeu de données. Cependant, ils sont moins bons que l'aléatoire en termes de spécificité, c'est-à-dire pour identifier toutes les paires de phrases qui ne sont pas des paraphrases parmi toutes les phrases non sémantiquement similaires du jeu de données. Les autres modèles présentent une meilleure équité dans toutes les métriques.
+Les résultats complets avec les métriques d'évaluation sont en annexes @subsect-stats, le pointillé orange représente le classificateur aléatoire. Le rappel est la métrique la plus élevée, ce qui signifie que les modèles sont particulièrement efficaces pour identifier toutes les paires de phrases qui sont des paraphrases parmi toutes les paraphrases du jeu de données. Cependant, ils sont moins bons que l'aléatoire en termes de spécificité, c'est-à-dire pour identifier toutes les paires de phrases qui ne sont pas des paraphrases parmi toutes les phrases non sémantiquement similaires du jeu de données. Les autres modèles présentent une meilleure équité dans toutes les métriques en moyenne.
 
 #figure(
   caption: "Résultats de deux modèles selon leurs métriques d'évaluation sur le dataset MRPC avec à gauche un entraînement sur MRPC et à droite un entraînement sur QQP.",
@@ -343,21 +347,33 @@ Les résultats complets avec les métriques d'évaluation sont en annexes @subse
 
 De plus, il semble que les métriques soient biaisées selon le corpus d'entraînement. Par exemple, à la @fig-metrics-mrpc-vs-qqp, on observe un faible niveau de spécificité pour le modèle entraîné sur MRPC (graphique de gauche), indiquant qu'il a du mal à correctement identifier les paires non-paraphrases. En revanche, le même modèle entraîné sur QQP présente une spécificité plus élevée (graphique de droite), ce qui suggère une meilleure performance dans la classification des paires non-paraphrases. Des exemples de ces graphiques sont fournis en annexe. Cela coïncide avec la proportion de chaque jeu de donnée représentée par les paraphrases et non-paraphrases. Enfin, à dans la @fig-metrics-moyenne, on constate que les métriques se compensent lorsque les jeux de données sont combinés en une moyenne.
 
-= Conclusion / discussion
-En conclusion, il est recommandé d'utiliser l'encodeur Universal Sentence Encoder avec le noyau SVM RBF ou Gaussian Naive Bayes, car ils offrent une excellente performance dans la captation sémantique des phrases et sont simples à utiliser compte tenu des limitations matérielles.
+= Conclusion & Discussion
+En conclusion, à la lumière des résultats, il est recommandé d'utiliser l'encodeur Universal Sentence Encoder avec le noyau SVM RBF ou Gaussian Naive Bayes, car ils offrent une excellente performance dans la captation sémantique des phrases et sont simples à utiliser compte tenu des limitations matérielles.
 
-Il serait intéressant, moyennant du matériel informatique plus puissant, d'entraîner les modèles utilisés sur l'entièreté des corpus QQP et MRPC. Cet entraînement sur une plus grande quantité de données permettrait potentiellement de meilleures performances sur les modèles utilisés et une analyse plus complète des jeux de données.
+Il serait intéressant, moyennant du matériel informatique plus puissant, d'entraîner les modèles utilisés sur l'entièreté des corpus QQP et MRPC. Cet entraînement sur une plus grande quantité de données permettrait potentiellement de meilleures performances de généralisation sur les modèles utilisés et une analyse plus complète des jeux de données.
 
 Également, il serait intéressant de tenter de générer des paraphrases. Considérons un modèle bayésien: serait-il possible d'apprendre un modèle qui représente le _likelihood_ (une classe sachant la phrase) et un qui apprend le _prior_ (une phrase), afin de générer un _posterior_ (une phrase sachant que l'on désire une classe "paraphrase")? Ce processus est utilisé dans d'autres branches de l'apprentissage machine, telles que la génération d'images.
 
 = Contributions des membres de l'équipe
 
-== Étienne Collin
-Objectifs, MDS, ISOMAP, PCA théorie et analyse résultats, théorie modèles d'apprentissage, encodeurs, prétraitement des données, conclusion, programmation.
+- *Etienne Collin*
+  - Objectifs
+  - MDS, ISOMAP et PCA: théorie et analyse des résultats
+  - Théorie modèles d'apprentissage
+  - Encodeurs
+  - Prétraitement des données
+  - Conclusion
+  - Programmation
 
-== Guillaume Genois
-Introduction, analyse exploratoire des données, analyse résultats modèles d'apprentissage, métriques de distance, métriques d'évaluation, programmation.
+- *Guillaume Genois*
+  - Introduction
+  - Analyse exploratoire des données
+  - Analyse résultats modèles d'apprentissage
+  - Métriques de distance
+  - Métriques d'évaluation
+  - Programmation.
 
+Au final, nous avons travaillé en paire et la charge de travail a bien été répartie.
 
 #pagebreak()
 = Annexes
@@ -511,3 +527,4 @@ $ "MCC" = ("TP" dot "TN"-"FP" dot "FN")/(2 dot sqrt(("TP" + "FP")("TP" + "FN")("
 ]
 
 #image("blob.jpg", width: 1pt)
+
